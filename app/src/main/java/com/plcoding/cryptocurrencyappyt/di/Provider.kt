@@ -3,23 +3,14 @@ package com.plcoding.cryptocurrencyappyt.di
 import com.plcoding.cryptocurrencyappyt.common.Constants
 import com.plcoding.cryptocurrencyappyt.data.remote.CoinPaprikaApi
 import com.plcoding.cryptocurrencyappyt.data.repository.CoinRepositoryImpl
-import com.plcoding.cryptocurrencyappyt.domain.repository.CoinRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.plcoding.cryptocurrencyappyt.domain.use_case.get_coin.GetCoinUseCase
+import com.plcoding.cryptocurrencyappyt.domain.use_case.get_coins.GetCoinsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Provides
-    @Singleton
-    fun providePaprikaApi(): CoinPaprikaApi {
+object Provider {
+    fun provideCoinPaprikaApi(): CoinPaprikaApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -27,9 +18,15 @@ object AppModule {
             .create(CoinPaprikaApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideCoinRepository(api: CoinPaprikaApi): CoinRepository {
-        return CoinRepositoryImpl(api)
+    fun provideCoinRepository(): CoinRepositoryImpl {
+        return CoinRepositoryImpl()
+    }
+
+    fun provideGetCoinUseCase(): GetCoinUseCase {
+        return GetCoinUseCase()
+    }
+
+    fun provideGetCoinsUseCase(): GetCoinsUseCase {
+        return GetCoinsUseCase()
     }
 }
