@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class GetCoinsUseCase() {
-    private val repository by lazy { Provider.provideCoinRepository() }
+    private val repository = Provider.coinRepository
     operator fun invoke(): Flow<Resource<List<Coin>>> = flow {
         try {
             emit(Resource.Loading<List<Coin>>())

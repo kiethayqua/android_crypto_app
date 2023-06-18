@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class CoinListViewModel(): ViewModel() {
-    private val getCoinsUseCase by lazy { Provider.provideGetCoinsUseCase() }
+    private val getCoinsUseCase = Provider.getCoinsUseCase
 
     private val _state = mutableStateOf<CoinListState>(CoinListState())
     val state: State<CoinListState> = _state

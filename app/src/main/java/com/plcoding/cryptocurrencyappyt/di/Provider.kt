@@ -7,10 +7,15 @@ import com.plcoding.cryptocurrencyappyt.domain.use_case.get_coin.GetCoinUseCase
 import com.plcoding.cryptocurrencyappyt.domain.use_case.get_coins.GetCoinsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 object Provider {
-    fun provideCoinPaprikaApi(): CoinPaprikaApi {
+
+    val coinPaprikaApi by lazy { provideCoinPaprikaApi() }
+    val coinRepository by lazy { provideCoinRepository() }
+    val getCoinUseCase by lazy { provideGetCoinUseCase() }
+    val getCoinsUseCase by lazy { provideGetCoinsUseCase() }
+
+    private fun provideCoinPaprikaApi(): CoinPaprikaApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -18,15 +23,15 @@ object Provider {
             .create(CoinPaprikaApi::class.java)
     }
 
-    fun provideCoinRepository(): CoinRepositoryImpl {
+    private fun provideCoinRepository(): CoinRepositoryImpl {
         return CoinRepositoryImpl()
     }
 
-    fun provideGetCoinUseCase(): GetCoinUseCase {
+    private fun provideGetCoinUseCase(): GetCoinUseCase {
         return GetCoinUseCase()
     }
 
-    fun provideGetCoinsUseCase(): GetCoinsUseCase {
+    private fun provideGetCoinsUseCase(): GetCoinsUseCase {
         return GetCoinsUseCase()
     }
 }

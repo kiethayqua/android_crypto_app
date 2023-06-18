@@ -4,15 +4,13 @@ import com.plcoding.cryptocurrencyappyt.common.Resource
 import com.plcoding.cryptocurrencyappyt.data.remote.dto.toCoinDetail
 import com.plcoding.cryptocurrencyappyt.di.Provider
 import com.plcoding.cryptocurrencyappyt.domain.model.CoinDetail
-import com.plcoding.cryptocurrencyappyt.domain.repository.CoinRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
 class GetCoinUseCase() {
-    private val repository by lazy { Provider.provideCoinRepository() }
+    private val repository = Provider.coinRepository
     operator fun invoke(coinId: String): Flow<Resource<CoinDetail>> = flow {
         try {
             emit(Resource.Loading<CoinDetail>())
